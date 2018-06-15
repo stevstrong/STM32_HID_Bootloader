@@ -37,13 +37,13 @@ LDFLAGS += -Wl,--gc-sections
 LDFLAGS += -Wl,--print-memory-usage
 LDFLAGS += -T$(LINKER_SCRIPT)
 
-CC = arm-none-eabi-gcc
-AS = arm-none-eabi-as
-LD = arm-none-eabi-ld
-OBJDUMP = arm-none-eabi-objdump
-OBJCOPY = arm-none-eabi-objcopy
-SIZE = arm-none-eabi-size
-GDB = arm-none-eabi-gdb
+CC = compiler/bin/arm-none-eabi-gcc
+AS = compiler/bin/arm-none-eabi-as
+LD = compiler/bin/arm-none-eabi-ld
+OBJDUMP = compiler/bin/arm-none-eabi-objdump
+OBJCOPY = compiler/bin/arm-none-eabi-objcopy
+SIZE = compiler/bin/arm-none-eabi-size
+GDB = compiler/bin/arm-none-eabi-gdb
 
 ECHO = echo
 RM = rm

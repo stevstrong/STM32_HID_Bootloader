@@ -97,8 +97,9 @@ int main() {
 
 	// Set B2 as Input Mode Floating
 	bit_clear(GPIOB->CRL, GPIO_CRL_MODE2);
-	bit_set(GPIOB->CRL, GPIO_CRL_CNF2_0);
-	bit_clear(GPIOB->CRL, GPIO_CRL_CNF2_1);
+	bit_set(GPIOB->CRL, GPIO_CRL_CNF2_1);
+	bit_clear(GPIOB->CRL, GPIO_CRL_CNF2_0);
+	bit_clear(GPIOB->ODR, GPIO_ODR_ODR2);
 
 	// Wait 1uS so the pull-up settles...
 	delay(72);
