@@ -48,7 +48,7 @@ void led2_on();
 void led2_off();
 #endif
 
-void led_init();
+void pins_init();
 void USB_Shutdown();
 void blink_led(uint16_t times);
 volatile uint32_t timeout = 0;
@@ -56,6 +56,9 @@ bool checkUserCode(u32 usrAddr);
 bool check_flash_complete(void);
 bool uploadStarted;
 bool uploadFinished;
+bool send_next_data = false;  
+
+static uint8_t CMD_SEND_NEXT_DATA[] = {'B','T','L','D','C','M','D',2}; 
 
 uint16_t get_and_clear_magic_word() {
 	bit_set(RCC->APB1ENR, RCC_APB1ENR_BKPEN | RCC_APB1ENR_PWREN); //Enable the power and backup interface clocks by setting the PWREN and BKPEN bitsin the RCC_APB1ENR register
@@ -73,33 +76,19 @@ uint16_t get_and_clear_magic_word() {
 }
 
 int main() {
-	led_init();
-	
+	pins_init();
+  
+  // Wait 1uS so the pull-up settles...
+	delay(72);
+  
 #if defined HAS_LED2_PIN
-
-
 	led2_off();
-
-
-
-
-
 #endif
 		
 	uploadStarted = false;
 	uploadFinished = false;
 	uint32_t userProgramAddress = *(volatile uint32_t *)(USER_PROGRAM + 0x04);
 	funct_ptr userProgram = (funct_ptr) userProgramAddress;
-
-
-	// Turn GPIOB clock on
-	bit_set(RCC->APB2ENR, RCC_APB2ENR_IOPBEN);
-
-	// Set B2 as Input Mode Floating
-	bit_clear(GPIOB->CRL, GPIO_CRL_MODE2);
-	bit_set(GPIOB->CRL, GPIO_CRL_CNF2_1);
-	bit_clear(GPIOB->CRL, GPIO_CRL_CNF2_0);
-	bit_clear(GPIOB->ODR, GPIO_ODR_ODR2);
 
 	// Wait 1uS so the pull-up settles...
 	delay(72);
